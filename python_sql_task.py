@@ -38,8 +38,8 @@ class Northwind:
     def input_data(self):
         # Loop round the column names asking for an input
         values = []
-        for col in self.col_names:
-            values.append(input(f"please enter {col[0]} value: "))
+        for col, data in self.col_names:
+            values.append(input(f"please enter {col} value in {data} form: "))
 
         # Enter values into the table
         for _ in range(len(self.col_names)):
