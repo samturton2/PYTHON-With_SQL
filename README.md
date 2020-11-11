@@ -10,4 +10,7 @@
 - set up PYODBC connection
 - command to install PYODBC
 ```pip install pyodbc```
-
+- Before you do anything, makes sure you have downloaded a pyodbc driver. You can download it from the following link:
+```
+https://docs.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver15
+```
