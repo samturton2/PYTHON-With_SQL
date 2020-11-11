@@ -5,7 +5,9 @@
 
 - **Some functions that we can use to interact with SQL data**
 
-- set up PYOBDC connection
 ![](/python_with_sql.png)
 
+- set up PYODBC connection
+- command to install PYODBC
+```pip install pyodbc```
 
