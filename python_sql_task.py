@@ -14,33 +14,55 @@ class Northwind:
         #create a class variable that's the cursor
         self.cursor = self.northwind_connection.cursor()
 
-    # Create a method that adds a table to the database
-    def create_4_column_varchar_table(self):
-        self.column1 = input("column1 title: ")
-        self.column2 = input("column2 title: ")
-        self.column3 = input("column3 title: ")
-        self.column4 = input("column4 title: ")
-        self.cursor.execute(f"""
-        CREATE TABLE new_table ( 
-            {self.column1} varchar(255),
-            {self.column2} varchar(255),
-            {self.column3} varchar(255),
-            {self.column4} varchar(255)
-            );
-        """)
+    # Create a method that adds a table to the database.
+    # Choose your table name, column names and datatypes
+    def create_table(self):
+        # Request table name
+        self.table_name = input("Enter table name: ")
+
+        self.col_names = []
+        # loop for as many columns the user wants
+        while True:
+            self.col_names.append([input("Enter column name: "), input("Enter column datatype and constraint (e.g VARCHAR(255): ")])
+            if '' in self.col_names[-1]:
+                self.col_names.pop(-1)
+                break
+
+        # Create table in database with first column
+        self.cursor.execute(f"CREATE TABLE {self.table_name} ({self.col_names[0][0]} {self.col_names[0][1]});")
+        # Add the rest of the table columns
+        for col, data in self.col_names[1:]:
+            self.cursor.execute(f"ALTER TABLE {self.table_name} ADD {col} {data};)")
 
     # create a method that lets user input data into the table
     def input_data(self):
-        value1 = input(f"{self.column1} row value: ")
-        value2 = input(f"{self.column2} row value: ")
-        value3 = input(f"{self.column3} row value: ")
-        value4 = input(f"{self.column4} row value: ")
-        cursor.execute(f"""
-        INSERT INTO new_table ({self.column1}, {self.column2}, {self.column3}, {self.column4})
-        VALUES ({value1}, {value2}, {value3}, {value4});
-        """)
+        # Loop round the column names asking for an input
+        values = []
+        for col in self.col_names:
+            values.append(input(f"please enter {col[0]} value: "))
 
+        # Enter values into the table
+        for _ in range(len(self.col_names)):
+            # check the data types as to know whether to pass values in quotes or not
+            if 'CHAR' in self.col_names[_][1]:
+                self.cursor.execute(f"""
+                INSERT INTO {self.table_name} ({self.col_names[_][0]})
+                VALUES ('{values[_]}');
+                """)
+            else:
+                self.cursor.execute(f"""
+                INSERT INTO {self.table_name} ({self.col_names[_][0]})
+                VALUES ({values[_]});
+                """)
 
-northwind = Northwind()
-northwind.establish_connection()
-northwind.create_4_column_varchar_table('name', 'colour', 'hat', 'gloves')
+if __name__ == "__main__":
+    northwind = Northwind()
+    northwind.establish_connection()
+    northwind.create_table()
+    northwind.input_data()
+    # Loop to add as much data as user wants
+    while True:
+        res = input("Do you want row?")
+        if res[0].lower == 'n':
+            break
+        northwind.input_data()
