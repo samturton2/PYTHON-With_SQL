@@ -9,7 +9,7 @@ class Northwind:
         server = "databases1.spartaglobal.academy"
         database = "Northwind"
         username = "SA"
-        password = "Passw0rd2018"
+        password = "********"
         self.northwind_connection = pyodbc.connect(f'DRIVER=ODBC Driver 17 for SQL Server;SERVER={server};DATABASE={database};UID={username};PWD={password}')
         #create a class variable that's the cursor
         self.cursor = self.northwind_connection.cursor()
