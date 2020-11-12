@@ -88,7 +88,7 @@ if __name__ == "__main__":
 - Add a while loop to add as much data to the new table as the user wants
 ```python
     while True:
-        res = input("Do you want row?")
+        res = input("Do you want another row?")
         if res[0].lower == 'n':
             break
         northwind.input_data()
